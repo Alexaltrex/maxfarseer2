@@ -1,0 +1,13 @@
+.app{
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    height: 100vh;
+    background-color: #aaa;
+    display: grid;
+    grid-template-areas:
+    'header header'
+    'sidebar main';
+    grid-template-rows: 50px 1fr;
+    grid-template-columns: 200px 1fr;
+}
