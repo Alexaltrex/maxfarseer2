@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/maxfarseer2/static/css/main.09bbca36.chunk.css",
+    "main.js": "/maxfarseer2/static/js/main.70e8e24f.chunk.js",
+    "main.js.map": "/maxfarseer2/static/js/main.70e8e24f.chunk.js.map",
+    "runtime-main.js": "/maxfarseer2/static/js/runtime-main.a3ae2547.js",
+    "runtime-main.js.map": "/maxfarseer2/static/js/runtime-main.a3ae2547.js.map",
+    "static/js/2.58e0eb9d.chunk.js": "/maxfarseer2/static/js/2.58e0eb9d.chunk.js",
+    "static/js/2.58e0eb9d.chunk.js.map": "/maxfarseer2/static/js/2.58e0eb9d.chunk.js.map",
+    "index.html": "/maxfarseer2/index.html",
+    "precache-manifest.1de74c60bb3af40da77b29688dd2076e.js": "/maxfarseer2/precache-manifest.1de74c60bb3af40da77b29688dd2076e.js",
+    "service-worker.js": "/maxfarseer2/service-worker.js",
+    "static/css/main.09bbca36.chunk.css.map": "/maxfarseer2/static/css/main.09bbca36.chunk.css.map",
+    "static/js/2.58e0eb9d.chunk.js.LICENSE.txt": "/maxfarseer2/static/js/2.58e0eb9d.chunk.js.LICENSE.txt",
+    "static/media/circles.svg": "/maxfarseer2/static/media/circles.1181204b.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a3ae2547.js",
+    "static/js/2.58e0eb9d.chunk.js",
+    "static/css/main.09bbca36.chunk.css",
+    "static/js/main.70e8e24f.chunk.js"
+  ]
+}
