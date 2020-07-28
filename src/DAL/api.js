@@ -13,8 +13,8 @@ export const newsAPI = {
 
 export const authAPI = {
     async login(email, password) {
-        let response = await instance.post('validate', {email, password})
-            return response.data;
+        let response = await instance.post('validate', {email, password});
+        return response.data;
     },
     async getUserInfo(userId) {
         let response = await instance.get(`user-info/${userId}`)

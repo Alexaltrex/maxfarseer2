@@ -29,7 +29,7 @@ const Login = (props) => {
     };
 
     const onKeyPress = (event) => {
-        if (event.key === 'enter') {
+        if (event.key === 'enter' && !props.isLoading) {
             onSubmit(event);
         }
     }
@@ -51,11 +51,11 @@ const Login = (props) => {
                 <input id='password' type="text" value={password} onChange={onChangePassword}/>
             </div>
             <div className={style.row}>
-                <input type="submit" value='Отправить'/>
+                <input type="submit" value={props.isLoading ? 'Проверяю...' : 'Отправить'} disabled={props.isLoading}/>
             </div>
             {(props.loginStatus==='err') && <div className={style.error}>{props.errorText}</div>}
-            {!formIsValid && <div  className={style.error}>{'Невалидный email или password'}</div>}
-
+            {!formIsValid && <div className={style.error}>{'Невалидный email или password'}</div>}
+            {props.isLanError && <div className={style.error}>{'Сервер не доступен'}</div>}
 
         </form>
     )

@@ -3,10 +3,10 @@ import Login from "./Login";
 import {login} from "../../../store/auth-reducer";
 
 const mapStateToProps = (state) => ({
-    //email: state.auth.email,
-    //password: state.auth.password,
     loginStatus: state.auth.loginStatus,
-    errorText: state.auth.errorText
+    errorText: state.auth.errorText,
+    isLanError: state.auth.isLanError,
+    isLoading: state.auth.isLoading
 });
 
 const LoginContainer = connect(mapStateToProps, {login})(Login);

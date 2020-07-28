@@ -7,18 +7,18 @@ const SET_LOGIN_STATUS = 'auth/SET-LOGIN-STATUS';
 const SET_ERROR_TEXT = 'auth/SET-ERROR-TEXT';
 const SET_USER_INFO = 'auth/SET-USER-INFO';
 const SET_USER_INFO_STATUS = 'auth/SET-USER-INFO-STATUS';
-const TOGGLE_LOADING = 'auth/TOGGLE_LOADING';
+const TOGGLE_LOADING = 'auth/TOGGLE-LOADING';
+const SET_IS_LAN_ERROR = 'auth/SET-IS-LAN-ERROR';
 
 let initialState = {
     isAuth: false,
-    email: null,// нужен ли?
-    password: null,// нужен ли?
     userId: null,
     loginStatus: null, // статус ответа с сервера при логинизации
     errorText: null, // выводимый в компонетне Login тект ошибки
     userInfo: null, // данные о пользователи
     userInfoStatus: null, // статус запроса данных о пользователе
-    isLoading: false
+    isLoading: false,
+    isLanError: false
 };
 
 const authReducer = (state = initialState, action) => {
@@ -53,6 +53,9 @@ const authReducer = (state = initialState, action) => {
         case TOGGLE_LOADING: {
             return {...state, isLoading: action.isLoading}
         }
+        case SET_IS_LAN_ERROR: {
+            return {...state, isLanError: action.isLanError}
+        }
         default:
             return state;
     }
@@ -66,30 +69,46 @@ export const setErrorText = (errorText) => ({type: SET_ERROR_TEXT, errorText});
 export const setUserInfo = (userInfo) => ({type: SET_USER_INFO, userInfo});
 export const setUserInfoStatus = (userInfoStatus) => ({type: SET_USER_INFO_STATUS, userInfoStatus});
 export const toggleLoading = (isLoading) => ({type: TOGGLE_LOADING, isLoading});
+export const setIsLanError = (isLanError) => ({type: SET_IS_LAN_ERROR, isLanError});
 
 export const login = (email, password) => async (dispatch) => {
-    let data = await authAPI.login(email, password);
-    dispatch(setLoginStatus(data.status));
-    if (data.status === 'ok') {
-        dispatch(setIsAuth(true));
-        dispatch(setUserId(data.data.id));
-    } else {
-        dispatch(setErrorText(data.message));
+    try {
+        dispatch(toggleLoading(true));
+        let data = await authAPI.login(email, password);
+        dispatch(toggleLoading(false));
+        dispatch(setIsLanError(false));
+        dispatch(setLoginStatus(data.status));
+        if (data.status === 'ok') {
+            dispatch(setIsAuth(true));
+            dispatch(setUserId(data.data.id));
+        } else {
+            dispatch(setErrorText(data.message));
+        }
+    } catch (e) {
+        dispatch(setIsLanError(true));
+        dispatch(toggleLoading(false));
     }
+
 }
 
 export const getUserInfo = (userId) => async (dispatch) => {
-    dispatch(toggleLoading(true));
-    let data = await authAPI.getUserInfo(userId);
-    if (data.status === 'ok') {
-        dispatch(setUserInfo(data.data));
-        dispatch(setUserInfoStatus('ok'));
+    try {
+        dispatch(toggleLoading(true));
+        dispatch(setIsLanError(false));
+        let data = await authAPI.getUserInfo(userId);
         dispatch(toggleLoading(false));
-    } else {
-        dispatch(setUserInfoStatus('err'));
+        if (data.status === 'ok') {
+            dispatch(setUserInfo(data.data));
+            dispatch(setUserInfoStatus('ok'));
+            dispatch(toggleLoading(false));
+        } else {
+            dispatch(setUserInfoStatus('err'));
+            dispatch(toggleLoading(false));
+        }
+    } catch (e) {
+        dispatch(setIsLanError(true));
         dispatch(toggleLoading(false));
     }
-
 }
 
 export default authReducer;

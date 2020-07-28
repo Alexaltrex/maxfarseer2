@@ -26,15 +26,13 @@ const newsReducer = (state = stateInitial, action) => {
 export const setNews = (news) => ({type: SET_NEWS, news});
 export const toggleLoading = (isLoading) => ({type: TOGGLE_LOADING, isLoading});
 
-export const getNews = () => dispatch => {
+export const getNews = () => async dispatch => {
     dispatch(toggleLoading(true));
-    newsAPI.getNews()
-        .then(data => {
-            if (data.status === 'ok') {
-                dispatch(toggleLoading(false));
-                dispatch(setNews(data.data));
-            }
-        });
+    let data = await newsAPI.getNews();
+    if (data.status === 'ok') {
+        dispatch(toggleLoading(false));
+        dispatch(setNews(data.data));
+    }
 };
 
 export default newsReducer;
